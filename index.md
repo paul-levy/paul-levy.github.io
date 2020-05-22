@@ -7,13 +7,13 @@ I study visual representation using physiology, psychophysics, and computational
 
 ## Current projects
 
-####Spatial frequency selectivity in thalamus and primary visual cortex####
+#### Spatial frequency selectivity in thalamus and primary visual cortex
 * Approach: Physiology, modeling, psychophysics
 * Aim: Selectivity of the spatial scale of images begins in the earliest stages of vision, but undergoes a transformation towards
 sharper and more varied selectivity in visual cortex. We use manipulations in the contrast and frequency content of images to understand
 
 
-####Saccadic Suppression** (with Roozbeh Kiani and Marc Zirnsak)####
+#### Saccadic Suppression (with Roozbeh Kiani and Marc Zirnsak) 
 * Approach: Human psychophysics
 * Aim: Visual perception is altered during saccadic eye movements. We used a detection task to densely sample changes in achromatic luminance sensitivity around the time of saccades.
 This has enabled us to better understand the spatiotemporal profile of saccadic suppression, uncovering important asymmetries with respect to gaze.
