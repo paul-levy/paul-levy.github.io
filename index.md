@@ -8,7 +8,7 @@ I'm currently a PhD student at New York University's Center for Neural Science, 
 I study visual representation using physiology, psychophysics, and computational modeling.
 
 <p>
-  <i>Further links:</i>
+  <i>Further links:</i>&nbsp;&nbsp;
   <a href="https://www.linkedin.com/in/paul-g-levy/">
     <img src="photos/linkedin.png" alt="linkedin page" width="20"/>
   </a>
