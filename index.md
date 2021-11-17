@@ -9,18 +9,19 @@ I study visual representation using physiology, psychophysics, and computational
 
 #### Further links
 
-<a href="https://www.linkedin.com/in/paul-g-levy/">
-  <img src="photos/linkedin.png" alt="linkedin page" width="20"/>
-</a>
+<p>
+  <a href="https://www.linkedin.com/in/paul-g-levy/">
+    <img src="photos/linkedin.png" alt="linkedin page" width="20"/>
+  </a>
 
-<a href="https://github.com/paul-levy/">
-  <img src="photos/github.png" alt="github page" width="20"/>
-</a>
+  <a href="https://github.com/paul-levy/">
+    <img src="photos/github.png" alt="github page" width="20"/>
+  </a>
 
-<a href="https://scholar.google.com/citations?user=ktGHoHYAAAAJ&hl=en">
-  <img src="photos/scholar.png" alt="scholar page" width="20"/>
-</a>
-
+  <a href="https://scholar.google.com/citations?user=ktGHoHYAAAAJ&hl=en">
+    <img src="photos/scholar.png" alt="scholar page" width="20"/>
+  </a>
+</p>
 
 ## Current projects
 
