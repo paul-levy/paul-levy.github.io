@@ -2,14 +2,13 @@
 layout: default
 ---
 
-Hello, I'm currently a PhD student at New York University's Center for Neural Science, co-advised by Tony Movshon and Eero Simoncelli. 
+## About Me
+
+I'm currently a PhD student at New York University's Center for Neural Science, co-advised by Tony Movshon and Eero Simoncelli. 
 I study visual representation using physiology, psychophysics, and computational modeling.
 
 <a href="https://www.linkedin.com/in/paul-g-levy/">
-  <img src="photos/linkedin.png" alt="linkedin page" width="100"/>
-</a>
-<a href="https://github.com/paul-levy/">
-  <img src="photos/github.png" alt="github page" width="100"/>
+  <img src="photos/linkedin.png" alt="linkedin page" width="50"/>
 </a>
 
 
@@ -53,5 +52,3 @@ For any of the below, contact me for a copy of the poster and/or abstract.
 |:----------------------|:------------------|:---------------|:-----------------------------|
 | University of Miami   | Physics, Math     | 2011-2015      | BS                           |
 | New York University   | Neural Science    | 2015 - present | PhD (in progress)            |
-
-## About Me
