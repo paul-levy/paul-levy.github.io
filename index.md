@@ -7,8 +7,18 @@ layout: default
 I'm currently a PhD student at New York University's Center for Neural Science, co-advised by Tony Movshon and Eero Simoncelli. 
 I study visual representation using physiology, psychophysics, and computational modeling.
 
+#### Further links
+
 <a href="https://www.linkedin.com/in/paul-g-levy/">
-  <img src="photos/linkedin.png" alt="linkedin page" width="50"/>
+  <img src="photos/linkedin.png" alt="linkedin page" width="20"/>
+</a>
+
+<a href="https://github.com/paul-levy/">
+  <img src="photos/github.png" alt="github page" width="20"/>
+</a>
+
+<a href="https://scholar.google.com/citations?user=ktGHoHYAAAAJ&hl=en">
+  <img src="photos/scholar.png" alt="scholar page" width="20"/>
 </a>
 
 
@@ -21,9 +31,10 @@ I study visual representation using physiology, psychophysics, and computational
 **Approach:** Physiology, modeling, psychophysics
 
 **Aim:** Selectivity for the spatial scale of images begins in the earliest stages of vision, but undergoes a transformation towards
-sharper and more varied selectivity in visual cortex. We use manipulations in the contrast and frequency content of images to understand spatial
-frequency content in the thalamus and primary visual cortex. Working with electrophysiological data and computational models, we have uncovered 
-interesting properties of contrast gain control and hierarcical processing of stimulus selectivity.
+sharper and more varied selectivity in visual cortex. We use manipulations in the contrast and frequency content of images to understand the 
+representation of spatial frequency content in the thalamus and primary visual cortex.
+Working with electrophysiological data and computational models, we have uncovered 
+interesting properties of contrast gain control and the hierarcical processing of stimulus selectivity.
 
 #### Saccadic Suppression
 
