@@ -26,9 +26,9 @@ I study visual representation using physiology, psychophysics, and computational
 
 #### Spatial frequency selectivity in thalamus and primary visual cortex
 
-*With:* Tony Movshon, Eero Simoncelli
+*With Tony Movshon, Eero Simoncelli*
 
-*Approach:* Physiology, modeling, psychophysics
+*Approach: Physiology, modeling, psychophysics*
 
 *Aim:* Selectivity for the spatial scale of images begins in the earliest stages of vision, but undergoes a transformation towards
 sharper and more varied selectivity in visual cortex. We manipulate the contrast and spatial frequency content of images to probe the 
@@ -38,9 +38,9 @@ interesting properties of contrast gain control and the hierarcical processing o
 
 #### Saccadic Suppression
 
-*With:* Roozbeh Kiani, Marc Zirnsak
+*With Roozbeh Kiani, Marc Zirnsak*
 
-*Approach:* Human psychophysics
+*Approach: Human psychophysics*
 
 *Aim:* Visual perception is altered during saccadic eye movements. We used a detection task to densely sample changes in achromatic luminance sensitivity around the time of saccades.
 This has enabled us to better understand the spatiotemporal profile of saccadic suppression, uncovering important asymmetries with respect to gaze.
