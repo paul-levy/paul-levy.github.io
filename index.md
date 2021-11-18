@@ -26,23 +26,23 @@ I study visual representation using physiology, psychophysics, and computational
 
 #### Spatial frequency selectivity in thalamus and primary visual cortex
 
-**With:** Tony Movshon, Eero Simoncelli
+*With:* Tony Movshon, Eero Simoncelli
 
-**Approach:** Physiology, modeling, psychophysics
+*Approach:* Physiology, modeling, psychophysics
 
-**Aim:** Selectivity for the spatial scale of images begins in the earliest stages of vision, but undergoes a transformation towards
-sharper and more varied selectivity in visual cortex. We use manipulations in the contrast and frequency content of images to understand the 
-representation of spatial frequency content in the thalamus and primary visual cortex.
+*Aim:* Selectivity for the spatial scale of images begins in the earliest stages of vision, but undergoes a transformation towards
+sharper and more varied selectivity in visual cortex. We manipulate the contrast and spatial frequency content of images to probe the 
+differential representations in the thalamus and primary visual cortex, and explore their underlying mechanisms and computation.
 Working with electrophysiological data and computational models, we have uncovered 
 interesting properties of contrast gain control and the hierarcical processing of stimulus selectivity.
 
 #### Saccadic Suppression
 
-**With:** Roozbeh Kiani, Marc Zirnsak
+*With:* Roozbeh Kiani, Marc Zirnsak
 
-**Approach:** Human psychophysics
+*Approach:* Human psychophysics
 
-**Aim:** Visual perception is altered during saccadic eye movements. We used a detection task to densely sample changes in achromatic luminance sensitivity around the time of saccades.
+*Aim:* Visual perception is altered during saccadic eye movements. We used a detection task to densely sample changes in achromatic luminance sensitivity around the time of saccades.
 This has enabled us to better understand the spatiotemporal profile of saccadic suppression, uncovering important asymmetries with respect to gaze.
 
 ## Publications
