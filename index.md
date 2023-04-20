@@ -4,7 +4,7 @@ layout: default
 
 ## About Me
 
-In the Spring of 2023, I started as a Computational Neuroscientist at <a href=""https://www.wispr.ai">Wispr</a>.
+In the Spring of 2023, I started as a Computational Neuroscientist at <a href="https://www.wispr.ai">Wispr</a>.
 I completed my PhD at New York University's Center for Neural Science, co-advised by Tony Movshon and Eero Simoncelli. 
 There, I studied visual representation using physiology, psychophysics, and computational modeling.
 
