@@ -4,8 +4,9 @@ layout: default
 
 ## About Me
 
-I'm currently a PhD student at New York University's Center for Neural Science, co-advised by Tony Movshon and Eero Simoncelli. 
-I study visual representation using physiology, psychophysics, and computational modeling.
+In the Spring of 2023, I started as a Computational Neuroscientist at <a href="wispr.ai">Wispr</a>.
+I completed my PhD at New York University's Center for Neural Science, co-advised by Tony Movshon and Eero Simoncelli. 
+There, I studied visual representation using physiology, psychophysics, and computational modeling.
 
 <p>
   <i>Further links:</i>&nbsp;&nbsp;
@@ -44,7 +45,7 @@ interesting properties of contrast gain control and the hierarcical processing o
 
 *Aim:* Visual perception is altered during saccadic eye movements. We used a detection task to densely sample changes in achromatic luminance sensitivity around the time of saccades.
 This has enabled us to better understand the spatiotemporal profile of saccadic suppression, uncovering important asymmetries with respect to gaze.
-
+ 
 ## Publications
 
 For any of the below, contact me for a copy of the poster and/or abstract.
@@ -55,11 +56,11 @@ For any of the below, contact me for a copy of the poster and/or abstract.
 | Cognitive Computational Neuroscience, 2017 | Asymmetric Saccadic Suppression: Preserved Luminance Sensitivity along the Saccade Trajectory |
 | Vision Sciences Society, 2019   | Contrast-dependent spatial frequency selectivity in macaque V1 neurons explainedwith tuned contrast gain control |
 | Vision Sciences Society, 2020   | Differing mechanisms for contrast-dependent spatial frequency selectivty in macaque LGN and V1 neurons |
-| Manuscript _in prep_ (2022)     | Asymmetric Saccadic Suppression |
+| Manuscript _in prep_ (2023)     | Asymmetric Saccadic Suppression |
 
 ## Education
 
 | Institution           | Focus             | year           | degree                       |
 |:----------------------|:------------------|:---------------|:-----------------------------|
 | University of Miami   | Physics, Math     | 2011-2015      | BS                           |
-| New York University   | Neural Science    | 2015 - present | PhD (in progress)            |
+| New York University   | Neural Science    | 2015-2023      | PhD                          |
