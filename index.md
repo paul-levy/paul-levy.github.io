@@ -5,7 +5,7 @@ layout: default
 ## About Me
 
 In the Spring of 2023, I started as a Computational Neuroscientist at <a href="https://www.wispr.ai">Wispr</a>.
-I completed my PhD at New York University's Center for Neural Science, co-advised by Tony Movshon and Eero Simoncelli. 
+Previously, I completed my PhD at New York University's Center for Neural Science, co-advised by Tony Movshon and Eero Simoncelli. 
 There, I studied visual representation using physiology, psychophysics, and computational modeling.
 
 <p>
@@ -23,7 +23,7 @@ There, I studied visual representation using physiology, psychophysics, and comp
   </a>
 </p>
 
-## Current projects
+## Academic projects
 
 #### Spatial frequency selectivity in thalamus and primary visual cortex
 
@@ -56,7 +56,9 @@ For any of the below, contact me for a copy of the poster and/or abstract.
 | Cognitive Computational Neuroscience, 2017 | Asymmetric Saccadic Suppression: Preserved Luminance Sensitivity along the Saccade Trajectory |
 | Vision Sciences Society, 2019   | Contrast-dependent spatial frequency selectivity in macaque V1 neurons explainedwith tuned contrast gain control |
 | Vision Sciences Society, 2020   | Differing mechanisms for contrast-dependent spatial frequency selectivty in macaque LGN and V1 neurons |
-| Manuscript _in prep_ (2023)     | Asymmetric Saccadic Suppression |
+| PhD thesis, 2023                | Spatial frequency selectivity in macaque LGN and V1 |
+| Manuscript _in prep_ (2024)     | Contrast-dependent spatial frequency selectivity in macaque LGN and V1 neurons |
+| Manuscript _in prep_ (2024)     | Asymmetric Saccadic Suppression |
 
 ## Education
 
