@@ -2,11 +2,14 @@
 layout: default
 ---
 
-## About Me
+## Computational Neuroscience | Data Science | Machine Learning
 
-In the Spring of 2023, I started as a Computational Neuroscientist at <a href="https://www.wispr.ai">Wispr</a>.
-Previously, I completed my PhD at New York University's Center for Neural Science, co-advised by Tony Movshon and Eero Simoncelli. 
-There, I studied visual representation using physiology, psychophysics, and computational modeling.
+Computational neuroscientist with 11+ years of experience including signal processing, machine learning, visual psychophysics, and experimental design.
+I worked on motion capture for the Xbox Kinect as an intern at Microsoft.
+I completed my PhD studying visual representation using physiology, psychophysics, and computational modeling in the Movshon + Simoncelli labs at NYU.
+I then joined Wispr, a wearables startup, where I worked on challenging, and research-oriented problems in neural interfaces. 
+
+Through roles in neuroscience, software, and human-computer interfaces, I've developed problem-solving expertise via hands-on research experiences - reach out if you want to talk about relevant opportunities!
 
 <p>
   <i>Further links:</i>&nbsp;&nbsp;
@@ -22,6 +25,24 @@ There, I studied visual representation using physiology, psychophysics, and comp
     <img src="photos/scholar.png" alt="scholar page" width="20"/>
   </a>
 </p>
+
+## Industry projects
+
+#### Neural interfaces wth Wispr
+
+*Computational Neuroscientist, collaborating with*
+
+*Approaches: Experimental design, signals processing, machine learning*
+
+I owned a variety of projects that shaped the product roadmap and related prototypes for a wearable neural interface. 
+I analyzed multi-modal time-series data (EMG, IMU, video, audio), built data pipelines (computer vision, signal processing), and conducted model feature exploration.
+
+
+#### Motion Capture for Microsoft's Xbox One Kinect
+*Software Engineering Intern*
+
+A cutting-edge device for human-computer interaction, the Kinect allowed user motion to be used as input to the Xbox One.
+I worked to create an automated pipeline for high-quality, labeled data by parsing motion capture data for use by the Kinect's machine learning models which could replace a labor-intensive, manual process.
 
 ## Academic projects
 
