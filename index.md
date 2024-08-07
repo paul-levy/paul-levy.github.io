@@ -71,17 +71,17 @@ For any of the below, contact me for a copy of the poster and/or abstract.
 
 | Conference/Journal              | Title                                                   | 
 |:--------------------------------|:--------------------------------------------------------|
-| Society for Neuroscience, 2016  | Effects of contrast and spectral dispersion on spatial frequency tuning in V1 |
-| Cognitive Computational Neuroscience, 2017 | Asymmetric Saccadic Suppression: Preserved Luminance Sensitivity along the Saccade Trajectory |
-| Vision Sciences Society, 2019   | Contrast-dependent spatial frequency selectivity in macaque V1 neurons explainedwith tuned contrast gain control |
-| Vision Sciences Society, 2020   | Differing mechanisms for contrast-dependent spatial frequency selectivty in macaque LGN and V1 neurons |
-| PhD thesis, 2023                | Spatial frequency selectivity in macaque LGN and V1 |
-| Manuscript _in prep_ (2024)     | Contrast-dependent spatial frequency selectivity in macaque LGN and V1 neurons |
 | Manuscript _in prep_ (2024)     | Asymmetric Saccadic Suppression |
+| Manuscript _in prep_ (2024)     | Contrast-dependent spatial frequency selectivity in macaque LGN and V1 neurons |
+| PhD thesis, 2023                | Spatial frequency selectivity in macaque LGN and V1 |
+| Vision Sciences Society, 2020   | Differing mechanisms for contrast-dependent spatial frequency selectivty in macaque LGN and V1 neurons |
+| Vision Sciences Society, 2019   | Contrast-dependent spatial frequency selectivity in macaque V1 neurons explainedwith tuned contrast gain control |
+| Cognitive Computational Neuroscience, 2017 | Asymmetric Saccadic Suppression: Preserved Luminance Sensitivity along the Saccade Trajectory |
+| Society for Neuroscience, 2016  | Effects of contrast and spectral dispersion on spatial frequency tuning in V1 |
 
 ## Education
 
 | Institution           | Focus             | year           | degree                       |
 |:----------------------|:------------------|:---------------|:-----------------------------|
-| University of Miami   | Physics, Math     | 2011-2015      | BS                           |
 | New York University   | Neural Science    | 2015-2023      | PhD                          |
+| University of Miami   | Physics, Math     | 2011-2015      | BS                           |
