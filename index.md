@@ -2,12 +2,10 @@
 layout: default
 ---
 
-## Computational Neuroscience | Data Science | Machine Learning
+## Computational Neuroscience | Data Science | Machine Learning | Visual psychophysics
 
 Computational neuroscientist with 11+ years of experience including signal processing, machine learning, visual psychophysics, and experimental design.
-I worked on motion capture for the Xbox Kinect as an intern at Microsoft.
-I completed my PhD studying visual representation using physiology, psychophysics, and computational modeling in the Movshon + Simoncelli labs at NYU.
-I then joined Wispr, a wearables startup, where I worked on challenging, and research-oriented problems in neural interfaces. 
+I have worked on motion capture (Microsoft's Xbox Kinect); electrophysiology, computational modeling, and psychophysics (NYU PhD); and on multi-modal neural interfaces and ML in wearble devices (Wispr).
 
 Through roles in neuroscience, software, and human-computer interfaces, I've developed problem-solving expertise via hands-on research experiences - reach out if you want to talk about relevant opportunities!
 
@@ -30,9 +28,9 @@ Through roles in neuroscience, software, and human-computer interfaces, I've dev
 
 #### Neural interfaces wth Wispr
 
-*Computational Neuroscientist, collaborating with*
+*Computational Neuroscientist, collaborating with ML, hardware, and data collection teams*
 
-*Approaches: Experimental design, signals processing, machine learning*
+*Approaches: Experimental design, signals processing, data & pre-processing pipelines, machine learning*
 
 I owned a variety of projects that shaped the product roadmap and related prototypes for a wearable neural interface. 
 I analyzed multi-modal time-series data (EMG, IMU, video, audio), built data pipelines (computer vision, signal processing), and conducted model feature exploration.
