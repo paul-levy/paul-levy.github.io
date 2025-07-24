@@ -127,30 +127,29 @@
         }
 
         function preloadCSVFromPath(path) {
-    fetch(path)
-        .then(response => response.text())
-        .then(csv => {
-            const lines = csv.split("
-").slice(1); // skip header
-            lines.forEach(line => {
-                if (!line.trim()) return;
-                const [taskNameRaw, datesRaw] = line.split(/,(.+)/);
-                const taskName = taskNameRaw.replace(/"/g, "");
-                const dates = datesRaw.replace(/"/g, "").split("; ").filter(Boolean);
-                if (taskName === "Start of Service" && dates.length > 0) {
-                    localStorage.setItem("micra-start-date", dates[0]);
-                } else if (taskName && dates.length) {
-                    localStorage.setItem(`micra-${taskName}`, JSON.stringify(dates));
-                }
-            });
-            updateTable();
-        })
-        .catch(error => console.error("Failed to preload CSV:", error));
-}
+            fetch(path)
+                .then(response => response.text())
+                .then(csv => {
+                    const lines = csv.trim().split("\n").slice(1); // skip header
+                    lines.forEach(line => {
+                        if (!line.trim()) return;
+                        const [taskNameRaw, datesRaw] = line.split(/,(.+)/);
+                        const taskName = taskNameRaw.replace(/"/g, "");
+                        const dates = datesRaw.replace(/"/g, "").split("; ").filter(Boolean);
+                        if (taskName === "Start of Service" && dates.length > 0) {
+                            localStorage.setItem("micra-start-date", dates[0]);
+                        } else if (taskName && dates.length) {
+                            localStorage.setItem(`micra-${taskName}`, JSON.stringify(dates));
+                        }
+                    });
+                    updateTable();
+                })
+                .catch(error => console.error("Failed to preload CSV:", error));
+        }
 
-window.onload = function() {
-    preloadCSVFromPath('files/mi_maintenance.csv');
-};
+        window.onload = function() {
+            preloadCSVFromPath('files/mi_maintenance.csv');
+        };
     </script>
     <style>
         body { font-family: sans-serif; padding: 20px; }
@@ -164,7 +163,7 @@ window.onload = function() {
 </head>
 <body>
     <h1>La Marzocco Micra Maintenance Tracker</h1>
-<p><strong>Reminder:</strong> Quick water backflush should be done <em>daily</em>.</p>
+    <p><strong>Reminder:</strong> Quick water backflush should be done <em>daily</em>.</p>
 
     <label for="start-date"><strong>Start of Service:</strong></label>
     <input type="date" id="start-date" onchange="saveStartDate()">
