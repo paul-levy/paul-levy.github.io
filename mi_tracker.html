@@ -1,28 +1,41 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>La Marzocco Micra Maintenance Tracker</title>
+    <title>&micro Maintenance Tracker</title>
     <script>
         const maintenanceTasks = [
             { name: "Detergent backflush (manual/app)", frequency: 21 },
             { name: "Clean portafilter, group parts, wand", frequency: 21 },
+            { name: "Clean water tank", frequency: 21 },
             { name: "Replace gasket/screen", frequency: 365 },
             { name: "Inspect valves, pressure, wiring", frequency: 730 },
-            { name: "Check water quality & descale", frequency: 0 }
+            { name: "Check water quality & descale", frequency: 0 } // No auto-due date for this one
         ];
 
+        // Helper function to safely parse dates
+        function parseDate(dateString) {
+            if (!dateString) return null;
+            const parts = dateString.split('-');
+            // Date constructor expects month to be 0-indexed
+            return new Date(parts[0], parts[1] - 1, parts[2]);
+        }
+
+        // Saves a task's last performed date to localStorage
         function saveDate(taskName) {
             const dateInput = document.getElementById(`date-${taskName}`).value;
-            if (!dateInput) return;
+            if (!dateInput) return; // Don't save empty dates
+
             const key = `micra-${taskName}`;
             let history = JSON.parse(localStorage.getItem(key) || "[]");
-            history.push(dateInput);
-            localStorage.setItem(key, JSON.stringify(history));
+            if (!history.includes(dateInput)) { // Prevent duplicate entries for the same day
+                history.push(dateInput);
+            }
+            localStorage.setItem(key, JSON.stringify(history.sort())); // Sort to keep history chronological
             updateTable();
         }
 
+        // Saves the machine's start date to localStorage
         function saveStartDate() {
             const dateInput = document.getElementById("start-date").value;
             if (!dateInput) return;
@@ -30,46 +43,85 @@
             updateTable();
         }
 
+        // Updates the entire table based on localStorage data
         function updateTable() {
             const startDateInput = document.getElementById("start-date");
             const ageDisplay = document.getElementById("machine-age");
             const storedStart = localStorage.getItem("micra-start-date");
             const today = new Date();
+            today.setHours(0, 0, 0, 0); // Normalize today's date to start of day for accurate comparison
 
+            // Handle Machine Start Date and Age
             if (storedStart) {
                 startDateInput.value = storedStart;
-                const startDate = new Date(storedStart);
-                const ageDays = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
-                const ageStr = ageDays > 0 ? `${Math.floor(ageDays / 365)}y ${Math.floor((ageDays % 365) / 30)}m` : "0 days";
-                ageDisplay.textContent = `Machine Age: ${ageStr}`;
+                const startDate = parseDate(storedStart);
+                if (startDate && startDate <= today) {
+                    const ageMs = today - startDate;
+                    const ageDays = Math.floor(ageMs / (1000 * 60 * 60 * 24));
+
+                    const years = Math.floor(ageDays / 365);
+                    const remainingDaysAfterYears = ageDays % 365;
+                    const months = Math.floor(remainingDaysAfterYears / 30.4375); // Average days in a month
+                    const days = Math.floor(remainingDaysAfterYears % 30.4375);
+
+                    let ageStr = [];
+                    if (years > 0) ageStr.push(`${years}y`);
+                    if (months > 0) ageStr.push(`${months}m`);
+                    if (days > 0 || (years === 0 && months === 0)) ageStr.push(`${days}d`); // Show days if less than month/year old
+
+                    ageDisplay.textContent = `Machine Age: ${ageStr.join(' ')}`;
+                } else {
+                    ageDisplay.textContent = "Invalid start date";
+                }
             } else {
+                startDateInput.value = ""; // Clear if no start date
                 ageDisplay.textContent = "";
             }
 
+            // Populate Maintenance Tasks Table
             const tableBody = document.getElementById("maintenance-body");
-            tableBody.innerHTML = "";
+            tableBody.innerHTML = ""; // Clear existing rows
 
             maintenanceTasks.forEach(task => {
                 const key = `micra-${task.name}`;
                 let history = JSON.parse(localStorage.getItem(key) || "[]");
+                // Get the most recent date from history
                 const lastDateStr = history.length > 0 ? history[history.length - 1] : "";
                 let nextDueStr = "N/A";
                 let daysSince = "N/A";
-                let rowClass = "";
+                let rowClass = ""; // For overdue or on-time coloring
 
+                let referenceDateForCalc = null;
                 if (lastDateStr) {
-                    const lastDate = new Date(lastDateStr);
-                    const diffTime = today - lastDate;
-                    daysSince = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-                    if (task.frequency > 0) {
-                        const nextDueDate = new Date(lastDate.getTime() + task.frequency * 86400000);
-                        nextDueStr = nextDueDate.toISOString().split('T')[0];
-                        if (today > nextDueDate) {
-                            rowClass = "overdue";
-                        }
-                    }
+                    referenceDateForCalc = parseDate(lastDateStr);
+                } else if (storedStart) {
+                    // If no specific task history, use the machine's start date as reference
+                    referenceDateForCalc = parseDate(storedStart);
                 }
 
+                if (referenceDateForCalc) {
+                    const diffTime = today - referenceDateForCalc;
+                    daysSince = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+                    if (task.frequency > 0) {
+                        const nextDueDate = new Date(referenceDateForCalc.getTime() + task.frequency * 86400000);
+                        nextDueDate.setHours(0, 0, 0, 0); // Normalize for comparison
+                        nextDueStr = nextDueDate.toISOString().split('T')[0];
+
+                        // Determine row class for color coding
+                        if (today > nextDueDate) {
+                            rowClass = "overdue"; // Red
+                        } else {
+                            rowClass = "on-time"; // Green
+                        }
+                    }
+                } else if (task.frequency > 0) {
+                    // If no last performed date and no start date, but a frequency exists, it's still overdue/pending
+                    rowClass = "overdue";
+                }
+
+
+                // Add row to table
                 tableBody.innerHTML += `
                     <tr class="${rowClass}">
                         <td>${task.name}</td>
@@ -81,6 +133,7 @@
             });
         }
 
+        // Exports all stored data to a CSV file
         function exportToCSV() {
             let csv = "Task,All Dates\n";
             maintenanceTasks.forEach(task => {
@@ -96,77 +149,103 @@
             const link = document.createElement("a");
             link.setAttribute("href", url);
             link.setAttribute("download", "Micra_Maintenance_History.csv");
-            link.style.visibility = 'hidden';
+            link.style.visibility = 'hidden'; // Hide the link
             document.body.appendChild(link);
             link.click();
-            document.body.removeChild(link);
+            document.body.removeChild(link); // Clean up the link
+            URL.revokeObjectURL(url); // Release the object URL
         }
 
+        // Imports data from a CSV file
         function importFromCSV(event) {
             const file = event.target.files[0];
             if (!file) return;
+
             const reader = new FileReader();
             reader.onload = function(e) {
-                const lines = e.target.result.split("\n").slice(1);
+                const lines = e.target.result.split("\n").slice(1); // skip header
+                // Clear existing localStorage before importing to prevent merge issues
+                // unless you specifically want to merge. For simplicity, we'll overwrite.
+                localStorage.clear();
+
                 lines.forEach(line => {
                     if (!line.trim()) return;
-                    const [taskNameRaw, datesRaw] = line.split(/,(.+)/);
-                    const taskName = taskNameRaw.replace(/"/g, "");
-                    const dates = datesRaw.replace(/"/g, "").split("; ").filter(Boolean);
+                    const [taskNameRaw, datesRaw] = line.split(/,(.+)/); // Handle potential commas in task names
+                    const taskName = taskNameRaw.replace(/"/g, "").trim(); // Remove quotes and trim whitespace
+                    const dates = datesRaw ? datesRaw.replace(/"/g, "").split("; ").filter(Boolean).map(d => d.trim()) : []; // Split dates, filter empty, and trim
+
                     if (taskName === "Start of Service" && dates.length > 0) {
                         localStorage.setItem("micra-start-date", dates[0]);
                     } else if (taskName && dates.length) {
-                        localStorage.setItem(`micra-${taskName}`, JSON.stringify(dates));
+                        // Ensure the task name matches one of our defined tasks, or handle unknown tasks
+                        // Trim to prevent issues with leading/trailing spaces from CSV
+                        const recognizedTask = maintenanceTasks.find(t => t.name === taskName);
+                        if (recognizedTask) {
+                            localStorage.setItem(`micra-${taskName}`, JSON.stringify(dates.sort())); // Ensure dates are sorted for consistency
+                        } else {
+                            console.warn(`Skipping unrecognized task during import: "${taskName}"`);
+                        }
                     }
                 });
-                updateTable();
-                alert("Import complete!");
+                updateTable(); // Refresh the table with imported data
+                alert("Import complete! Data loaded from CSV.");
+                // Reset file input value to allow re-importing the same file
+                event.target.value = '';
             };
             reader.readAsText(file);
         }
 
-        function preloadCSVFromPath(path) {
-            fetch(path)
-                .then(response => response.text())
-                .then(csv => {
-                    const lines = csv.trim().split("\n").slice(1);
-                    lines.forEach(line => {
-                        if (!line.trim()) return;
-                        const [taskNameRaw, datesRaw] = line.split(/,(.+)/);
-                        const taskName = taskNameRaw.replace(/"/g, "");
-                        const dates = datesRaw.replace(/"/g, "").split("; ").filter(Boolean);
-                        if (taskName === "Start of Service" && dates.length > 0) {
-                            localStorage.setItem("micra-start-date", dates[0]);
-                        } else if (taskName && dates.length) {
-                            localStorage.setItem(`micra-${taskName}`, JSON.stringify(dates));
-                        }
-                    });
-                    updateTable();
-                })
-                .catch(error => console.error("Failed to preload CSV:", error));
-        }
-
-        window.onload = function() {
-            preloadCSVFromPath('files/mi_maintenance.csv');
-        };
+        // Initialize the table when the page loads
+        window.onload = updateTable;
     </script>
     <style>
-        body { font-family: sans-serif; padding: 20px; }
-        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-        th { background-color: #f4f4f4; }
-        input[type="date"] { width: 100%; }
-        button { margin-top: 20px; padding: 10px 15px; font-size: 16px; }
-        .overdue { background-color: #ffe5e5; }
+        body { font-family: sans-serif; padding: 20px; max-width: 800px; margin: auto; line-height: 1.6; }
+        h1 { text-align: center; color: #333; }
+        .info-box { background-color: #e6f7ff; border: 1px solid #91d5ff; padding: 15px; border-radius: 5px; margin-bottom: 20px; font-size: 0.9em; }
+        .info-box p { margin: 5px 0; }
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; vertical-align: middle; }
+        th { background-color: #f8f8f8; font-weight: bold; }
+        td input[type="date"] { width: calc(100% - 10px); padding: 5px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        /* Color Coding */
+        .overdue { background-color: #ffe0e0; /* Light Red */ }
+        .on-time { background-color: #e6ffe6; /* Light Green */ }
+        /* Style for tasks with frequency 0 (e.g., Check water quality) or no reference date */
+        tr:not(.overdue):not(.on-time) { background-color: #f0f0f0; /* Light grey for N/A due dates or no reference */ }
+
+        .controls { margin-top: 30px; display: flex; gap: 15px; flex-wrap: wrap; }
+        button, .button-like { padding: 10px 20px; font-size: 1em; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease; }
+        button { background-color: #007bff; color: white; }
+        button:hover { background-color: #0056b3; }
+        .button-like {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            display: inline-block; /* Allows padding and width */
+            text-align: center;
+            line-height: 1; /* Adjusts vertical alignment */
+            box-sizing: border-box;
+            color: #333;
+        }
+        .button-like:hover { background-color: #e0e0e0; }
+        label { font-weight: bold; margin-right: 10px; }
+        .start-date-section { margin-bottom: 20px; background-color: #f9f9f9; padding: 15px; border-radius: 5px; border: 1px solid #eee; display: flex; align-items: center; gap: 10px; }
+        #machine-age { font-weight: bold; color: #555; }
     </style>
 </head>
 <body>
-    <h1>La Marzocco Micra Maintenance Tracker</h1>
-    <p><strong>Reminder:</strong> Quick water backflush should be done <em>daily</em>.</p>
+    <h1>&micro Maintenance Tracker</h1>
 
-    <label for="start-date"><strong>Start of Service:</strong></label>
-    <input type="date" id="start-date" onchange="saveStartDate()">
-    <span id="machine-age"></span>
+    <div class="info-box">
+        <p><strong>How it works:</strong> Your maintenance dates are saved directly in your browser's local storage. This data will persist even if you close the page.</p>
+        <p>Use "Export to CSV" to create a backup file or transfer your data. Use "Import from CSV" to load data from a previously exported file.</p>
+        <p><strong>Reminder:</strong> Quick water backflush should be done <em>daily</em> (this task is not tracked here but is crucial!).</p>
+    </div>
+
+    <div class="start-date-section">
+        <label for="start-date"><strong>Start of Service:</strong></label>
+        <input type="date" id="start-date" onchange="saveStartDate()">
+        <span id="machine-age"></span>
+    </div>
 
     <table>
         <thead>
@@ -177,9 +256,16 @@
                 <th>Next Due</th>
             </tr>
         </thead>
-        <tbody id="maintenance-body"></tbody>
+        <tbody id="maintenance-body">
+            </tbody>
     </table>
-    <button onclick="exportToCSV()">Export to CSV</button>
-    <input type="file" accept=".csv" onchange="importFromCSV(event)">
+
+    <div class="controls">
+        <button onclick="exportToCSV()">Export to CSV</button>
+        <div>
+            <label for="import-file" class="button-like">Import from CSV</label>
+            <input type="file" id="import-file" accept=".csv" onchange="importFromCSV(event)" style="display: none;">
+        </div>
+    </div>
 </body>
 </html>
