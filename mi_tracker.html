@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,17 +6,16 @@
     <title>La Marzocco Micra Maintenance Tracker</title>
     <script>
         const maintenanceTasks = [
-    { name: "Detergent backflush (manual/app)", frequency: 21 },
-    { name: "Clean portafilter, group parts, wand", frequency: 21 },
-    { name: "Replace gasket/screen", frequency: 365 },
-    { name: "Inspect valves, pressure, wiring", frequency: 730 },
-    { name: "Check water quality & descale", frequency: 0 }
-];
+            { name: "Detergent backflush (manual/app)", frequency: 21 },
+            { name: "Clean portafilter, group parts, wand", frequency: 21 },
+            { name: "Replace gasket/screen", frequency: 365 },
+            { name: "Inspect valves, pressure, wiring", frequency: 730 },
+            { name: "Check water quality & descale", frequency: 0 }
+        ];
 
         function saveDate(taskName) {
             const dateInput = document.getElementById(`date-${taskName}`).value;
             if (!dateInput) return;
-
             const key = `micra-${taskName}`;
             let history = JSON.parse(localStorage.getItem(key) || "[]");
             history.push(dateInput);
@@ -99,16 +99,15 @@
             link.style.visibility = 'hidden';
             document.body.appendChild(link);
             link.click();
-xc            document.body.removeChild(link);
+            document.body.removeChild(link);
         }
 
         function importFromCSV(event) {
             const file = event.target.files[0];
             if (!file) return;
-
             const reader = new FileReader();
             reader.onload = function(e) {
-                const lines = e.target.result.split("\n").slice(1); // skip header
+                const lines = e.target.result.split("\n").slice(1);
                 lines.forEach(line => {
                     if (!line.trim()) return;
                     const [taskNameRaw, datesRaw] = line.split(/,(.+)/);
@@ -130,8 +129,22 @@ xc            document.body.removeChild(link);
             fetch(path)
                 .then(response => response.text())
                 .then(csv => {
-                    const lines = csv.trim().split("\n").slice(1); // skip header
-	            X
+                    const lines = csv.trim().split("\n").slice(1);
+                    lines.forEach(line => {
+                        if (!line.trim()) return;
+                        const [taskNameRaw, datesRaw] = line.split(/,(.+)/);
+                        const taskName = taskNameRaw.replace(/"/g, "");
+                        const dates = datesRaw.replace(/"/g, "").split("; ").filter(Boolean);
+                        if (taskName === "Start of Service" && dates.length > 0) {
+                            localStorage.setItem("micra-start-date", dates[0]);
+                        } else if (taskName && dates.length) {
+                            localStorage.setItem(`micra-${taskName}`, JSON.stringify(dates));
+                        }
+                    });
+                    updateTable();
+                })
+                .catch(error => console.error("Failed to preload CSV:", error));
+        }
 
         window.onload = function() {
             preloadCSVFromPath('files/mi_maintenance.csv');
@@ -164,8 +177,7 @@ xc            document.body.removeChild(link);
                 <th>Next Due</th>
             </tr>
         </thead>
-        <tbody id="maintenance-body">
-        </tbody>
+        <tbody id="maintenance-body"></tbody>
     </table>
     <button onclick="exportToCSV()">Export to CSV</button>
     <input type="file" accept=".csv" onchange="importFromCSV(event)">
