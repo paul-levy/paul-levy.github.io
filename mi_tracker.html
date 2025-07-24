@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>La Marzocco Micra Maintenance Tracker</title>
+    <script>
+        const maintenanceTasks = [
+    { name: "Detergent backflush (manual/app)", frequency: 21 },
+    { name: "Clean portafilter, group parts, wand", frequency: 21 },
+    { name: "Replace gasket/screen", frequency: 365 },
+    { name: "Inspect valves, pressure, wiring", frequency: 730 },
+    { name: "Check water quality & descale", frequency: 0 }
+];
+
+        function saveDate(taskName) {
+            const dateInput = document.getElementById(`date-${taskName}`).value;
+            if (!dateInput) return;
+
+            const key = `micra-${taskName}`;
+            let history = JSON.parse(localStorage.getItem(key) || "[]");
+            history.push(dateInput);
+            localStorage.setItem(key, JSON.stringify(history));
+            updateTable();
+        }
+
+        function saveStartDate() {
+            const dateInput = document.getElementById("start-date").value;
+            if (!dateInput) return;
+            localStorage.setItem("micra-start-date", dateInput);
+            updateTable();
+        }
+
+        function updateTable() {
+            const startDateInput = document.getElementById("start-date");
+            const ageDisplay = document.getElementById("machine-age");
+            const storedStart = localStorage.getItem("micra-start-date");
+            const today = new Date();
+
+            if (storedStart) {
+                startDateInput.value = storedStart;
+                const startDate = new Date(storedStart);
+                const ageDays = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+                const ageStr = ageDays > 0 ? `${Math.floor(ageDays / 365)}y ${Math.floor((ageDays % 365) / 30)}m` : "0 days";
+                ageDisplay.textContent = `Machine Age: ${ageStr}`;
+            } else {
+                ageDisplay.textContent = "";
+            }
+
+            const tableBody = document.getElementById("maintenance-body");
+            tableBody.innerHTML = "";
+
+            maintenanceTasks.forEach(task => {
+                const key = `micra-${task.name}`;
+                let history = JSON.parse(localStorage.getItem(key) || "[]");
+                const lastDateStr = history.length > 0 ? history[history.length - 1] : "";
+                let nextDueStr = "N/A";
+                let daysSince = "N/A";
+                let rowClass = "";
+
+                if (lastDateStr) {
+                    const lastDate = new Date(lastDateStr);
+                    const diffTime = today - lastDate;
+                    daysSince = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                    if (task.frequency > 0) {
+                        const nextDueDate = new Date(lastDate.getTime() + task.frequency * 86400000);
+                        nextDueStr = nextDueDate.toISOString().split('T')[0];
+                        if (today > nextDueDate) {
+                            rowClass = "overdue";
+                        }
+                    }
+                }
+
+                tableBody.innerHTML += `
+                    <tr class="${rowClass}">
+                        <td>${task.name}</td>
+                        <td><input type="date" id="date-${task.name}" value="${lastDateStr}" onchange="saveDate('${task.name}')"></td>
+                        <td>${daysSince}</td>
+                        <td>${nextDueStr}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        function exportToCSV() {
+            let csv = "Task,All Dates\n";
+            maintenanceTasks.forEach(task => {
+                const key = `micra-${task.name}`;
+                let history = JSON.parse(localStorage.getItem(key) || "[]");
+                csv += `"${task.name}","${history.join('; ')}"\n`;
+            });
+            const startDate = localStorage.getItem("micra-start-date") || "";
+            csv += `"Start of Service","${startDate}"\n`;
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.setAttribute("href", url);
+            link.setAttribute("download", "Micra_Maintenance_History.csv");
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function importFromCSV(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const lines = e.target.result.split("\n").slice(1); // skip header
+                lines.forEach(line => {
+                    if (!line.trim()) return;
+                    const [taskNameRaw, datesRaw] = line.split(/,(.+)/);
+                    const taskName = taskNameRaw.replace(/"/g, "");
+                    const dates = datesRaw.replace(/"/g, "").split("; ").filter(Boolean);
+                    if (taskName === "Start of Service" && dates.length > 0) {
+                        localStorage.setItem("micra-start-date", dates[0]);
+                    } else if (taskName && dates.length) {
+                        localStorage.setItem(`micra-${taskName}`, JSON.stringify(dates));
+                    }
+                });
+                updateTable();
+                alert("Import complete!");
+            };
+            reader.readAsText(file);
+        }
+
+        function preloadCSVFromPath(path) {
+    fetch(path)
+        .then(response => response.text())
+        .then(csv => {
+            const lines = csv.split("
+").slice(1); // skip header
+            lines.forEach(line => {
+                if (!line.trim()) return;
+                const [taskNameRaw, datesRaw] = line.split(/,(.+)/);
+                const taskName = taskNameRaw.replace(/"/g, "");
+                const dates = datesRaw.replace(/"/g, "").split("; ").filter(Boolean);
+                if (taskName === "Start of Service" && dates.length > 0) {
+                    localStorage.setItem("micra-start-date", dates[0]);
+                } else if (taskName && dates.length) {
+                    localStorage.setItem(`micra-${taskName}`, JSON.stringify(dates));
+                }
+            });
+            updateTable();
+        })
+        .catch(error => console.error("Failed to preload CSV:", error));
+}
+
+window.onload = function() {
+    preloadCSVFromPath('files/mi_maintenance.csv');
+};
+    </script>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        input[type="date"] { width: 100%; }
+        button { margin-top: 20px; padding: 10px 15px; font-size: 16px; }
+        .overdue { background-color: #ffe5e5; }
+    </style>
+</head>
+<body>
+    <h1>La Marzocco Micra Maintenance Tracker</h1>
+<p><strong>Reminder:</strong> Quick water backflush should be done <em>daily</em>.</p>
+
+    <label for="start-date"><strong>Start of Service:</strong></label>
+    <input type="date" id="start-date" onchange="saveStartDate()">
+    <span id="machine-age"></span>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Task</th>
+                <th>Last Performed</th>
+                <th>Days Since Last</th>
+                <th>Next Due</th>
+            </tr>
+        </thead>
+        <tbody id="maintenance-body">
+        </tbody>
+    </table>
+    <button onclick="exportToCSV()">Export to CSV</button>
+    <input type="file" accept=".csv" onchange="importFromCSV(event)">
+</body>
+</html>
