@@ -172,13 +172,17 @@
                     if (!line.trim()) return;
                     const [taskNameRaw, datesRaw] = line.split(/,(.+)/); // Handle potential commas in task names
                     const taskName = taskNameRaw.replace(/"/g, "").trim(); // Remove quotes and trim whitespace
-                    const dates = datesRaw ? datesRaw.replace(/"/g, "").split("; ").filter(Boolean).map(d => d.trim()) : []; // Split dates, filter empty, and trim
+
+                    // --- DEBUGGING LINE START ---
+                    console.log(`Importing: "${taskName}"`);
+                    // --- DEBUGGING LINE END ---
+
+                    const dates = datesRaw ? datesRaw.replace(/"/g, "").split("; ").filter(d => d.length > 0).map(d => d.trim()) : []; // Split dates, filter empty, and trim
 
                     if (taskName === "Start of Service" && dates.length > 0) {
                         localStorage.setItem("micra-start-date", dates[0]);
                     } else if (taskName && dates.length) {
-                        // Ensure the task name matches one of our defined tasks, or handle unknown tasks
-                        // Trim to prevent issues with leading/trailing spaces from CSV
+                        // Ensure the task name matches one of our defined tasks
                         const recognizedTask = maintenanceTasks.find(t => t.name === taskName);
                         if (recognizedTask) {
                             localStorage.setItem(`micra-${taskName}`, JSON.stringify(dates.sort())); // Ensure dates are sorted for consistency
